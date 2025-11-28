@@ -1,6 +1,14 @@
 # AEDM: Attention-based Encoder-Decoder Model for Post-disaster Road Assessment Drone Routing
 This repository implements the **AEDM (Attention-based Encoder-Decoder Model)** proposed in the paper *"Deep Reinforcement Learning for Drone Route Optimization in Post-Disaster Road Assessment"*, aiming to solve rapid drone routing optimization for post-disaster road damage assessment.
 
+## Problem Statement
+
+Given a road network affected by disaster, deploy a fleet of drones to:
+- Maximize collected damage information across the road network
+- Complete assessment within time constraints
+- Respect battery flight time limits
+- Determine optimal routes for multiple drones
+
 ## Model Architecture
 ![AEDM Architecture](https://raw.githubusercontent.com/PJ-HTU/AEDM-for-Post-disaster-road-assessment/main/Model%20Architecture.jpg)
 The model processes road network coordinates, drone parameters, and constraints through:
@@ -14,14 +22,6 @@ The model processes road network coordinates, drone parameters, and constraints 
 - **No Domain Expertise Required**: Eliminates need for hand-crafted algorithms through end-to-end learning
 - **Strong Generalization**: Robust performance across varying problem scales, drone numbers, and time constraints
 - **Multi-task Learning**: Handles diverse parameter combinations in a unified framework
-
-## Problem Statement
-
-Given a road network affected by disaster, deploy a fleet of drones to:
-- Maximize collected damage information across the road network
-- Complete assessment within time constraints
-- Respect battery flight time limits
-- Determine optimal routes for multiple drones
 
 ## Technical Highlights
 
