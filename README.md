@@ -30,9 +30,11 @@ Given a road network affected by disaster, deploy a fleet of drones to:
 - Resolves ambiguities between road links (for assessment) and direct routes (for transit)
 
 ### Key Innovations
-1. **Synthetic Road Network Generation**: Addresses scarcity of large-scale training datasets
-2. **EMA-based Reward Normalization**: Ensures stable multi-task convergence
-3. **8-fold Augmentation**: Coordinate transformations for robust inference
+1. **Network Transformation**: Converts link-based routing problems (assessing road segments) into node-based formulations to eliminate ambiguity and reduce computational complexity .
+2. **Synthetic Data Generation**: Addresses large-scale training dataset scarcity by generating realistic road network instances (grid initialization → link pruning → node perturbation) .
+3. **Attention-based Encoder-Decoder**: Uses Transformer architecture to learn optimal routing strategies end-to-end via deep reinforcement learning (DRL) .
+4. **Multi-task Learning**: Handles diverse parameter combinations (drone count, assessment time limits) and generalizes to unseen scenarios (e.g., 75–105min assessment time, 6–12 drones) .
+
 
 ## Quick Start
 ### Dependencies
