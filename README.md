@@ -31,6 +31,43 @@ The model processes road network coordinates, drone parameters, and constraints 
 3. **Attention-based Encoder-Decoder**: Uses Transformer architecture to learn optimal routing strategies end-to-end via deep reinforcement learning (DRL) .
 4. **Multi-task Learning**: Handles simultaneous training across varying drone numbers and time constraints, eliminating the need for separate models per parameter combination .
 
+## Repository Structure
+The repository is organized to separate core logic (environment, model, training) from auxiliary tools, ensuring clarity and maintainability. 
+```
+AEDM-for-Post-disaster-road-assessment/
+├── AEDM/                     # Core code directory (implements all model & task logic)
+│   ├── PDRA/                 # Post-disaster Road Assessment (PDRA) task module
+│   │   ├── POMO/             # Policy Optimization with Multiple Optima (POMO) implementation
+│   │   ├── PDRAEnv.py        # PDRA environment class: simulates post-disaster road network scenarios
+│   │   │   - Initializes dual networks (original road network for assessment + fully connected auxiliary network for transit).
+│   │   │   - Implements environment interaction: `reset()` (reset scenario), `step()` (execute drone action and update state), and time/battery constraint checks.
+│   │   │   - Calculates road link assessment time, transit time, and information value collection.
+│   │   ├── PDRAModel.py      # AEDM model class: defines attention-based encoder-decoder architecture
+│   │   │   - Encoder: Processes node features (coordinates, information value) and global parameters (K, p_max, Q) into high-dimensional embeddings via Transformer layers.
+│   │   │   - Decoder: Sequentially generates drone routes using MHA, single-head attention (SHA), and masking (blocks infeasible actions like re-visiting information nodes).
+│   │   │   - Outputs route probability distributions and ensures feasible solutions (e.g., drones return to depot within time limits).
+│   │   ├── PDRATrainer.py    # Model training logic class
+│   │   │   - Loads training instances (synthetic road networks) and initializes model/optimizer.
+│   │   │   - Implements POMO-based training: multi-optima sampling, EMA-Z-score reward normalization (stabilizes multi-task training).
+│   │   │   - Tracks training metrics (loss, collected information value) and saves checkpoints.
+│   │   └── PDRATester.py     # Model testing logic class
+│   │       - Loads pre-trained models and test instances (synthetic/real-world road networks like Anaheim).
+│   │       - Evaluates model performance: calculates solution quality (collected information value), inference time.
+│   │       - Supports 8-fold instance augmentation (coordinate flipping/swapping) to improve solution diversity.
+│   └── utils/                # Auxiliary tools directory (supports core logic execution)
+│       ├── utils.py          # General utility functions
+│       │   - Log data management: `LogData` class to record training/testing metrics (loss, score, time) for visualization.
+│       │   - Distance calculation: Computes Euclidean distance between nodes (for transit/assessment time estimation).
+│       └── log_image_style/  # Log image styling configuration
+│           └── style_PDRA_20.json # Defines visualization styles.
+├── train_n100.py             # Training entry script (for 100-node synthetic instances)
+│   - Defines hyperparameters: embedding dimension (128), encoder layers (6), batch size (64), epochs (200).
+│   - Calls `PDRATrainer` to start training: samples synthetic instances, runs POMO training, and saves checkpoints to `checkpoints/`.
+├── test_n100.py              # Testing entry script (for 100-node instances, extendable to 1000-node)
+│   - Loads pre-trained models from `checkpoints/` and test instances (synthetic or real-world like Anaheim).
+│   - Calls `PDRATester` to evaluate performance: outputs inference time, collected information value.
+└── checkpoints/              # Pre-trained model storage directory
+```
 
 ## Quick Start
 
@@ -84,42 +121,5 @@ If you use this code or model in your research, please cite the paper:
 }
 ```
 
-## Repository Structure
-The repository is organized to separate core logic (environment, model, training) from auxiliary tools, ensuring clarity and maintainability. 
-```
-AEDM-for-Post-disaster-road-assessment/
-├── AEDM/                     # Core code directory (implements all model & task logic)
-│   ├── PDRA/                 # Post-disaster Road Assessment (PDRA) task module
-│   │   ├── POMO/             # Policy Optimization with Multiple Optima (POMO) implementation
-│   │   ├── PDRAEnv.py        # PDRA environment class: simulates post-disaster road network scenarios
-│   │   │   - Initializes dual networks (original road network for assessment + fully connected auxiliary network for transit).
-│   │   │   - Implements environment interaction: `reset()` (reset scenario), `step()` (execute drone action and update state), and time/battery constraint checks.
-│   │   │   - Calculates road link assessment time, transit time, and information value collection.
-│   │   ├── PDRAModel.py      # AEDM model class: defines attention-based encoder-decoder architecture
-│   │   │   - Encoder: Processes node features (coordinates, information value) and global parameters (K, p_max, Q) into high-dimensional embeddings via Transformer layers.
-│   │   │   - Decoder: Sequentially generates drone routes using MHA, single-head attention (SHA), and masking (blocks infeasible actions like re-visiting information nodes).
-│   │   │   - Outputs route probability distributions and ensures feasible solutions (e.g., drones return to depot within time limits).
-│   │   ├── PDRATrainer.py    # Model training logic class
-│   │   │   - Loads training instances (synthetic road networks) and initializes model/optimizer.
-│   │   │   - Implements POMO-based training: multi-optima sampling, EMA-Z-score reward normalization (stabilizes multi-task training).
-│   │   │   - Tracks training metrics (loss, collected information value) and saves checkpoints.
-│   │   └── PDRATester.py     # Model testing logic class
-│   │       - Loads pre-trained models and test instances (synthetic/real-world road networks like Anaheim).
-│   │       - Evaluates model performance: calculates solution quality (collected information value), inference time.
-│   │       - Supports 8-fold instance augmentation (coordinate flipping/swapping) to improve solution diversity.
-│   └── utils/                # Auxiliary tools directory (supports core logic execution)
-│       ├── utils.py          # General utility functions
-│       │   - Log data management: `LogData` class to record training/testing metrics (loss, score, time) for visualization.
-│       │   - Distance calculation: Computes Euclidean distance between nodes (for transit/assessment time estimation).
-│       └── log_image_style/  # Log image styling configuration
-│           └── style_PDRA_20.json # Defines visualization styles.
-├── train_n100.py             # Training entry script (for 100-node synthetic instances)
-│   - Defines hyperparameters: embedding dimension (128), encoder layers (6), batch size (64), epochs (200).
-│   - Calls `PDRATrainer` to start training: samples synthetic instances, runs POMO training, and saves checkpoints to `checkpoints/`.
-├── test_n100.py              # Testing entry script (for 100-node instances, extendable to 1000-node)
-│   - Loads pre-trained models from `checkpoints/` and test instances (synthetic or real-world like Anaheim).
-│   - Calls `PDRATester` to evaluate performance: outputs inference time, collected information value.
-└── checkpoints/              # Pre-trained model storage directory
-```
 ## Acknowledgements
 💡 Our code builds on [POMO](https://github.com/yd-kwon/POMO). Big thanks! 
