@@ -33,11 +33,24 @@ Given a road network affected by disaster, deploy a fleet of drones to:
 
 
 ## Quick Start
+
 ### Dependencies
-- Python 3.8+
-- PyTorch 1.10+
-- NumPy, Pandas, Matplotlib
-- Scipy
+```bash
+# Python environment requirements
+Python 3.8+
+PyTorch 1.10+
+NumPy
+Pandas
+Matplotlib
+Scipy
+```
+
+### Installation
+```bash
+git clone https://github.com/PJ-HTU/UM_PDRA.git
+cd UM_PDRA
+pip install -r requirements.txt
+```
 
 ### Training
 ```bash
@@ -45,11 +58,20 @@ Given a road network affected by disaster, deploy a fleet of drones to:
 python train_n100.py --epochs 200 --batch_size 64 --embedding_dim 128
 ```
 
+**Training Parameters:**
+- `epochs`: Number of training epochs (default: 200)
+- `batch_size`: Batch size (default: 64)
+- `embedding_dim`: Embedding dimension (default: 128)
+
 ### Testing
 ```bash
 # Test on custom road network instances (supports up to 1000 nodes)
-python test_n100.py --model_path ./checkpoints/aedm_best.pth --augmentation 8
+python test_n100.py --model_path ./checkpoints/um_best.pth --augmentation 8
 ```
+
+**Testing Parameters:**
+- `model_path`: Path to pre-trained model
+- `augmentation`: Instance augmentation factor (improves solution diversity through coordinate flipping/swapping)
 
 ## Citation
 If you use this code or model in your research, please cite the paper:
