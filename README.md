@@ -54,12 +54,11 @@ python test_n100.py --model_path ./checkpoints/aedm_best.pth --augmentation 8
 ## Citation
 If you use this code or model in your research, please cite the paper:
 ```
-@article{gong2024aedm,
-  title={Deep Reinforcement Learning for Drone Route Optimization in Post-Disaster Road Assessment},
+@article{gong2025deep,
+  title={Deep Reinforcement Learning for Real-Time Drone Routing in Post-Disaster Road Assessment Without Domain Knowledge},
   author={Gong, Huatian and Sheu, Jiuh-Biing and Wang, Zheng and Yang, Xiaoguang and Yan, Ran},
-  journal={[Journal Name]},
-  year={2024},
-  publisher={Elsevier/Springer/ACM}
+  journal={arXiv preprint arXiv:2509.01886},
+  year={2025}
 }
 ```
 
@@ -100,3 +99,4 @@ AEDM-for-Post-disaster-road-assessment/
 │   - Calls `PDRATester` to evaluate performance: outputs inference time, collected information value.
 └── checkpoints/              # Pre-trained model storage directory
 ```
+## Acknowledgements
