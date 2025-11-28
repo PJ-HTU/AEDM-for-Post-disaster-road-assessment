@@ -9,7 +9,7 @@ The model processes road network coordinates, drone parameters, and constraints 
 
 ## Key Features
 
-- **Real-time Performance**: 1-2 seconds inference time vs. 100-2,000 seconds for traditional methods
+- **Rapid Performance**: 1-2 seconds inference time vs. 100-2,000 seconds for traditional methods
 - **Superior Solution Quality**: over commercial solvers (Gurobi) and traditional heuristics
 - **No Domain Expertise Required**: Eliminates need for hand-crafted algorithms through end-to-end learning
 - **Strong Generalization**: Robust performance across varying problem scales, drone numbers, and time constraints
