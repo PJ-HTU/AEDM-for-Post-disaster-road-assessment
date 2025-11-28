@@ -15,7 +15,7 @@ Address the time sensitivity and complexity of post-disaster road assessment by:
 5. **Synthetic Data Generation**: Solves large-scale training dataset scarcity by generating realistic road network instances.
 
 ## Model Architecture
-![AEDM Architecture]https://github.com/PJ-HTU/AEDM-for-Post-disaster-road-assessment/blob/main/Model%20Architecture.jpg
+![AEDM Architecture](https://raw.githubusercontent.com/PJ-HTU/AEDM-for-Post-disaster-road-assessment/main/Model%20Architecture.jpg)
 The model processes road network coordinates, drone parameters, and constraints through:
 - **Encoder**: Embeds node features and global parameters (drone count, time limits) via multi-head attention layers.
 - **Decoder**: Sequentially constructs feasible routes with masking mechanisms to enforce time/battery constraints and avoid redundant assessments.
