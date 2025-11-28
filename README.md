@@ -29,11 +29,6 @@ Given a road network affected by disaster, deploy a fleet of drones to:
 - Converts link-based routing problems to equivalent node-based formulations
 - Resolves ambiguities between road links (for assessment) and direct routes (for transit)
 
-### Model Architecture
-- **Encoder**: 6-layer transformer with multi-head attention
-- **Decoder**: Sequential route construction with masking mechanisms
-- **Training**: POMO (Policy Optimization with Multiple Optima) with multi-task learning
-
 ### Key Innovations
 1. **Synthetic Road Network Generation**: Addresses scarcity of large-scale training datasets
 2. **EMA-based Reward Normalization**: Ensures stable multi-task convergence
