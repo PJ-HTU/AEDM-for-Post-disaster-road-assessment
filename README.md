@@ -1,24 +1,43 @@
 # AEDM: Attention-based Encoder-Decoder Model for Post-disaster Road Assessment Drone Routing
 This repository implements the **AEDM (Attention-based Encoder-Decoder Model)** proposed in the paper *"Deep Reinforcement Learning for Drone Route Optimization in Post-Disaster Road Assessment"*, aiming to solve rapid drone routing optimization for post-disaster road damage assessment.
 
-## Core Objective
-Address the time sensitivity and complexity of post-disaster road assessment by:
-- Generating high-quality drone routes within 1–2 seconds (vs. 100–2000s for traditional methods)
-- Maximizing the collection of road damage information without domain-specific algorithm design
-- Supporting multi-drone coordination and adaptability to diverse disaster scenarios
-
-## Key Features
-1. **Network Transformation**: Converts link-based routing problems into node-based formulations to eliminate ambiguity and reduce computational complexity.
-2. **Attention-based Encoder-Decoder Architecture**: Leverages Transformer to learn optimal routing strategies end-to-end via deep reinforcement learning.
-3. **Multi-task Learning**: Handles diverse parameter combinations (drone count, assessment time limits) and generalizes to unseen scenarios.
-4. **Rapid Inference**: Outperforms commercial solvers (20–71% improvement) and traditional heuristics (23–35% improvement) in solution quality.
-5. **Synthetic Data Generation**: Solves large-scale training dataset scarcity by generating realistic road network instances.
-
 ## Model Architecture
 ![AEDM Architecture](https://raw.githubusercontent.com/PJ-HTU/AEDM-for-Post-disaster-road-assessment/main/Model%20Architecture.jpg)
 The model processes road network coordinates, drone parameters, and constraints through:
 - **Encoder**: Embeds node features and global parameters (drone count, time limits) via multi-head attention layers.
 - **Decoder**: Sequentially constructs feasible routes with masking mechanisms to enforce time/battery constraints and avoid redundant assessments.
+
+## Key Features
+
+- **Real-time Performance**: 1-2 seconds inference time vs. 100-2,000 seconds for traditional methods
+- **Superior Solution Quality**: over commercial solvers (Gurobi) and traditional heuristics
+- **No Domain Expertise Required**: Eliminates need for hand-crafted algorithms through end-to-end learning
+- **Strong Generalization**: Robust performance across varying problem scales, drone numbers, and time constraints
+- **Multi-task Learning**: Handles diverse parameter combinations in a unified framework
+
+## Problem Statement
+
+Given a road network affected by disaster, deploy a fleet of drones to:
+- Maximize collected damage information across the road network
+- Complete assessment within time constraints
+- Respect battery flight time limits
+- Determine optimal routes for multiple drones
+
+## Technical Highlights
+
+### Network Transformation
+- Converts link-based routing problems to equivalent node-based formulations
+- Resolves ambiguities between road links (for assessment) and direct routes (for transit)
+
+### Model Architecture
+- **Encoder**: 6-layer transformer with multi-head attention
+- **Decoder**: Sequential route construction with masking mechanisms
+- **Training**: POMO (Policy Optimization with Multiple Optima) with multi-task learning
+
+### Key Innovations
+1. **Synthetic Road Network Generation**: Addresses scarcity of large-scale training datasets
+2. **EMA-based Reward Normalization**: Ensures stable multi-task convergence
+3. **8-fold Augmentation**: Coordinate transformations for robust inference
 
 ## Quick Start
 ### Dependencies
