@@ -100,4 +100,4 @@ AEDM-for-Post-disaster-road-assessment/
 └── checkpoints/              # Pre-trained model storage directory
 ```
 ## Acknowledgements
-💡 **Our code builds on [POMO](https://github.com/yd-kwon/POMO)**. Big thanks! 
+💡 Our code builds on [POMO](https://github.com/yd-kwon/POMO). Big thanks! 
